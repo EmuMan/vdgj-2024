@@ -1,0 +1,57 @@
+[gd_scene load_steps=5 format=3 uid="uid://cs3hle6vg6r4r"]
+
+[ext_resource type="Script" path="res://scripts/player/player_movement.gd" id="1_qsdeo"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_84s5h"]
+size = Vector2(16, 16)
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_ob6vw"]
+size = Vector2(16, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fxrcm"]
+size = Vector2(16, 16)
+
+[node name="TestScene" type="Node2D"]
+
+[node name="Player" type="CharacterBody2D" parent="."]
+position = Vector2(384, 152)
+script = ExtResource("1_qsdeo")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+shape = SubResource("RectangleShape2D_84s5h")
+
+[node name="Sprite2D" type="Sprite2D" parent="Player"]
+texture = SubResource("PlaceholderTexture2D_ob6vw")
+
+[node name="Collider1" type="StaticBody2D" parent="."]
+position = Vector2(64, 192)
+scale = Vector2(39, 16)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Collider1"]
+position = Vector2(8, 8)
+shape = SubResource("RectangleShape2D_fxrcm")
+
+[node name="Polygon2D" type="Polygon2D" parent="Collider1"]
+polygon = PackedVector2Array(0, 0, 16, 0, 16, 16, 0, 16)
+
+[node name="Collider2" type="StaticBody2D" parent="."]
+position = Vector2(464, 136)
+scale = Vector2(6.34, 14.404)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Collider2"]
+position = Vector2(8, 8)
+shape = SubResource("RectangleShape2D_fxrcm")
+
+[node name="Polygon2D" type="Polygon2D" parent="Collider2"]
+polygon = PackedVector2Array(0, 0, 16, 0, 16, 16, 0, 16)
+
+[node name="Collider3" type="StaticBody2D" parent="."]
+position = Vector2(216, 80)
+scale = Vector2(6.34, 14.404)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Collider3"]
+position = Vector2(8, 8)
+shape = SubResource("RectangleShape2D_fxrcm")
+
+[node name="Polygon2D" type="Polygon2D" parent="Collider3"]
+polygon = PackedVector2Array(0, 0, 16, 0, 16, 16, 0, 16)
