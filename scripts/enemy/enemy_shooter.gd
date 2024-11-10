@@ -1,8 +1,9 @@
 extends Node2D
 
 @export var target: Node2D
+@export var shooting_range: float = 1000.0
 
-const shooting_cooldown: int = 2000
+@export var shooting_cooldown: int = 2000
 
 var last_shoot_action_time: int = 0
 
@@ -17,7 +18,8 @@ func _physics_process(delta: float) -> void:
 
 	if is_instance_valid(target):
 		var displacement := target.global_position - global_position
-		shoot(displacement.angle())
+		if displacement.length_squared() <= shooting_range * shooting_range:
+			shoot(displacement.angle())
 
 func shoot(direction: float) -> void:
 	last_shoot_action_time = Time.get_ticks_msec()

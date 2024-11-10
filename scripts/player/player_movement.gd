@@ -7,11 +7,11 @@ enum JumpState { CAN_JUMP, JUMPING, AIRBORN }
 enum DashState { CAN_DASH, DASHING, ON_COOLDOWN }
 
 
-@export var h_max_speed = 300.0
-@export var h_accel = 3000.0
-@export var h_deaccel = 3000.0
+@export var h_max_speed = 200.0
+@export var h_accel = 4000.0
+@export var h_deaccel = 4000.0
 
-@export var v_max_speed = 800.0
+@export var v_max_speed = 400.0
 @export var gravity_modifier = 1.0
 
 @export var jump_velocity = -300.0

@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://cs3hle6vg6r4r"]
+[gd_scene load_steps=11 format=3 uid="uid://cs3hle6vg6r4r"]
 
 [ext_resource type="Script" path="res://scripts/player/player_movement.gd" id="1_qsdeo"]
 [ext_resource type="Texture2D" uid="uid://dw0rjvk6eljd8" path="res://assets/sprites/cat.png" id="2_w3ocd"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" path="res://scripts/player/player_meleer.gd" id="5_oj387"]
 [ext_resource type="Script" path="res://scripts/gameplay/destabilizer.gd" id="7_86qyq"]
 [ext_resource type="Script" path="res://scripts/gameplay/world_generator.gd" id="8_34wu2"]
+[ext_resource type="Script" path="res://scripts/gameplay/terrain_block.gd" id="9_niqnq"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_84s5h"]
 size = Vector2(16, 16)
@@ -43,7 +44,15 @@ player = NodePath("../Player")
 script = ExtResource("7_86qyq")
 player = NodePath("../Player")
 
-[node name="WorldGenerator" type="Node2D" parent="." node_paths=PackedStringArray("load_target")]
+[node name="WorldGenerator" type="Node2D" parent="."]
 script = ExtResource("8_34wu2")
-load_target = NodePath("../Player")
-load_range = 300
+
+[node name="TerrainBlock" type="Node2D" parent="WorldGenerator"]
+script = ExtResource("9_niqnq")
+block_width = 150.0
+block_height = 60.0
+boundary_thickness = 40.0
+pillar_min_height = 1.0
+pillar_max_height = 25.0
+pillar_min_width = 5.0
+pillar_max_width = 40.0

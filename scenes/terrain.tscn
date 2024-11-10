@@ -4,7 +4,6 @@
 size = Vector2(16, 16)
 
 [node name="Terrain" type="StaticBody2D" groups=["Terrain"]]
-position = Vector2(-8, -8)
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
