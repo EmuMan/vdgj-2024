@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://cfnrcnqyojk0e"]
+
+[ext_resource type="Script" path="res://scripts/player/player_bullet.gd" id="1_6ntwr"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_2f8if"]
+radius = 4.0
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_deqkr"]
+size = Vector2(8, 8)
+
+[node name="PlayerBullet" type="RigidBody2D"]
+collision_layer = 4
+collision_mask = 257
+gravity_scale = 0.0
+script = ExtResource("1_6ntwr")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_2f8if")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = SubResource("PlaceholderTexture2D_deqkr")
