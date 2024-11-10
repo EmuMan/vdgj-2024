@@ -25,7 +25,7 @@ func on_terrain_collision() -> void:
 	queue_free()
 
 func on_enemy_collision(enemy: Node) -> void:
-	var stats := enemy.get_parent().find_child("EnemyStats")
+	var stats := enemy.find_child("EnemyStats")
 	if is_instance_valid(stats):
 		stats.damage(40.0)
 		queue_free()

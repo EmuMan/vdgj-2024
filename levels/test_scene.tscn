@@ -1,10 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://cs3hle6vg6r4r"]
+[gd_scene load_steps=11 format=3 uid="uid://cs3hle6vg6r4r"]
 
 [ext_resource type="Script" path="res://scripts/player/player_movement.gd" id="1_qsdeo"]
 [ext_resource type="Texture2D" uid="uid://dw0rjvk6eljd8" path="res://assets/sprites/cat.png" id="2_w3ocd"]
 [ext_resource type="Script" path="res://scripts/player/player_shooter.gd" id="2_wxvxt"]
 [ext_resource type="Script" path="res://scripts/player/player_stats.gd" id="3_c4dmc"]
 [ext_resource type="Script" path="res://scripts/player/player_camera.gd" id="4_jbj4d"]
+[ext_resource type="Script" path="res://scripts/player/player_meleer.gd" id="5_oj387"]
 [ext_resource type="PackedScene" uid="uid://cgfb0ii5ggrxo" path="res://scenes/enemy/stationary_enemy.tscn" id="5_upc8m"]
 [ext_resource type="Script" path="res://scripts/gameplay/destabilizer.gd" id="7_86qyq"]
 
@@ -33,6 +34,9 @@ script = ExtResource("2_wxvxt")
 
 [node name="PlayerStats" type="Node2D" parent="Player"]
 script = ExtResource("3_c4dmc")
+
+[node name="PlayerMeleer" type="Node2D" parent="Player"]
+script = ExtResource("5_oj387")
 
 [node name="Collider1" type="StaticBody2D" parent="." groups=["Terrain"]]
 position = Vector2(64, 192)
