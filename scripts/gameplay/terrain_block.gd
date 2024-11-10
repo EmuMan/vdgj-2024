@@ -54,7 +54,6 @@ func add_random_platform():
 	var enemy_pos = pos + Vector2(platform_width / 2, -2.)
 	var enemy = instantiate_stationary_enemy(enemy_pos)
 	enemy.target = get_node("/root/TestScene/Player")
-	print_debug(enemy.target)
 	add_child(enemy)
 
 func instantiate_terrain(position: Vector2, size: Vector2) -> Node2D:

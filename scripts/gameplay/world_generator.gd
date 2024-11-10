@@ -43,7 +43,6 @@ func _process(delta: float) -> void:
 
 func create_block(index: int) -> Node2D:
 	var x_pos = index * block_width
-	print_debug(x_pos)
 	var block := block_scene.instantiate() as Node2D
 	block.position.x = x_pos * 8.0
 	block.block_width = block_width

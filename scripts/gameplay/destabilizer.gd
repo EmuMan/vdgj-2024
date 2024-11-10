@@ -1,5 +1,10 @@
 extends Node2D
 
+class_name Destabilizer
+
+signal destabilize
+signal stabilize
+
 
 @export var player: CharacterBody2D
 
@@ -13,10 +18,10 @@ enum DestabilizationType {
 }
 
 
-const DESTABILIZE_DURATION = 15 * 1000
-const DESTABILIZE_COOLDOWN = 30 * 1000
+const DESTABILIZE_DURATION = 10 * 1000
+const DESTABILIZE_COOLDOWN = 20 * 1000
 
-var last_destabilize_time: int = -DESTABILIZE_COOLDOWN
+var last_destabilize_time: int = -DESTABILIZE_DURATION
 var destabilizations: Array[DestabilizationType] = []
 var old_values: Array = []
 var destabilized: bool = false
@@ -30,14 +35,14 @@ func _process(delta: float) -> void:
 	var now := Time.get_ticks_msec()
 	
 	if destabilized and now > last_destabilize_time + DESTABILIZE_DURATION:
-		stabilize()
+		on_stabilize()
 	
 	if not destabilized and now > last_destabilize_time + DESTABILIZE_COOLDOWN:
-		destabilize(1)
+		on_destabilize(1)
 		last_destabilize_time = now
 
-func destabilize(count: int) -> void:
-	print_debug("Destabilizing")
+func on_destabilize(count: int) -> void:
+	destabilize.emit()
 	destabilized = true
 	for i in range(count):
 		var new_destabilization = DestabilizationType.values().pick_random()
@@ -68,8 +73,8 @@ func destabilize(count: int) -> void:
 			destabilizations.append(new_destabilization)
 			old_values.append(old_value)
 
-func stabilize() -> void:
-	print_debug("Stabilizing")
+func on_stabilize() -> void:
+	stabilize.emit()
 	destabilized = false
 	for i in range(mini(len(destabilizations), len(old_values))):
 		var old_value = old_values[i]
