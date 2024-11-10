@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://cs3hle6vg6r4r"]
+[gd_scene load_steps=12 format=3 uid="uid://cs3hle6vg6r4r"]
 
 [ext_resource type="Script" path="res://scripts/player/player_movement.gd" id="1_qsdeo"]
 [ext_resource type="Texture2D" uid="uid://dw0rjvk6eljd8" path="res://assets/sprites/cat.png" id="2_w3ocd"]
@@ -8,9 +8,12 @@
 [ext_resource type="Script" path="res://scripts/player/player_meleer.gd" id="5_oj387"]
 [ext_resource type="Script" path="res://scripts/gameplay/destabilizer.gd" id="7_86qyq"]
 [ext_resource type="Script" path="res://scripts/gameplay/world_generator.gd" id="8_34wu2"]
+[ext_resource type="Script" path="res://levels/health_bar.gd" id="9_nc8ft"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_84s5h"]
 size = Vector2(16, 16)
+
+[sub_resource type="Theme" id="Theme_ch7px"]
 
 [node name="TestScene" type="Node2D"]
 
@@ -47,3 +50,15 @@ player = NodePath("../Player")
 script = ExtResource("8_34wu2")
 load_target = NodePath("../Player")
 load_range = 300
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ProgressBar" type="ProgressBar" parent="CanvasLayer" node_paths=PackedStringArray("player_stats")]
+offset_right = 200.0
+offset_bottom = 27.0
+theme = SubResource("Theme_ch7px")
+script = ExtResource("9_nc8ft")
+player_stats = NodePath("../../Player/PlayerStats")
+metadata/_edit_use_anchors_ = true
+
+[connection signal="health_changed" from="Player/PlayerStats" to="CanvasLayer/ProgressBar" method="_on_player_stats_health_changed"]

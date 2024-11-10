@@ -11,13 +11,17 @@ config_version=5
 [application]
 
 config/name="New Game Project"
-run/main_scene="res://levels/test_scene.tscn"
+run/main_scene="res://levels/main_menu.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 config/icon="res://icon.svg"
 
 [autoload]
 
 Util="*res://scripts/global/util.gd"
+
+[display]
+
+window/stretch/mode="canvas_items"
 
 [global_group]
 
