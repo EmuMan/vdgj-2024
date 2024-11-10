@@ -1,0 +1,68 @@
+[gd_scene load_steps=3 format=3 uid="uid://cjoiuyhajn0ke"]
+
+[ext_resource type="Script" path="res://ui/game_over.gd" id="1_dwy4a"]
+[ext_resource type="AudioStream" uid="uid://byrt8ieseu1qk" path="res://assets/music/sad.ogg" id="1_t6aah"]
+
+[node name="GameOver" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_dwy4a")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 0
+offset_left = 544.0
+offset_top = 424.0
+offset_right = 609.0
+offset_bottom = 490.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="Restart" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Restart"
+
+[node name="Main Menu" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Main Menu"
+
+[node name="Quit" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Quit"
+
+[node name="Game Over" type="Label" parent="."]
+layout_mode = 0
+offset_left = 536.0
+offset_top = 112.0
+offset_right = 623.0
+offset_bottom = 135.0
+text = "Game Over"
+
+[node name="Larry" type="Label" parent="."]
+layout_mode = 0
+offset_left = 216.0
+offset_top = 216.0
+offset_right = 923.0
+offset_bottom = 239.0
+text = "\"god doesnts hide in heaven because he afraids of what he createds. he's afraids of... larry.\""
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("1_t6aah")
+volume_db = -4.685
+autoplay = true
+
+[node name="Killed" type="Label" parent="."]
+layout_mode = 0
+offset_left = 512.0
+offset_top = 320.0
+offset_right = 684.0
+offset_bottom = 343.0
+text = "You only killed _ larrys"
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Restart" to="." method="_on_restart_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Main Menu" to="." method="_on_main_menu_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Quit" to="." method="_on_quit_pressed"]

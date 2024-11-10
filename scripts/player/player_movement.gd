@@ -110,7 +110,8 @@ func process_inputs(delta: float) -> void:
 
 func update_grounded_state() -> void:
 	var now = Time.get_ticks_msec()
-	if is_on_floor():
+	var on_floor = is_on_floor() if gravity_modifier > 0 else is_on_ceiling()
+	if on_floor:
 		last_time_grounded = now
 		grounded_state = GroundedState.GROUNDED
 		return

@@ -12,18 +12,19 @@ var health := 0.0
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	health = max_health
+	Util.enemies_killed = 0
 
 func on_death() -> void:
 	print_debug("DEAD!!!! hehehaw, says larty")
-	get_parent().queue_free()
+	get_tree().change_scene_to_file("res://levels/game_over.tscn")
 
 func damage(hp: float) -> void:
-	health_changed.emit()
 	if health - hp <= 0.0:
 		health = 0.0
 		on_death()
 	else:
 		health -= hp
+	health_changed.emit()
 
 func heal(hp: float) -> void:
 	health = min(health + hp, max_health)

@@ -12,6 +12,7 @@ func _ready() -> void:
 
 func on_death() -> void:
 	print_debug("lary kiled B)")
+	Util.enemies_killed += 1
 	get_parent().queue_free()
 
 func damage(hp: float) -> void:

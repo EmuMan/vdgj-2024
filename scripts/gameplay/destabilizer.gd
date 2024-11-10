@@ -11,10 +11,8 @@ signal stabilize
 enum DestabilizationType {
 	PLAYER_REVERSE_GRAVITY,
 	PLAYER_NO_FRICTION,
-	PLAYER_BOUNCY,
 	PLAYER_SPEED_INCREASE,
-	PLAYER_JUMP_HEIGHT_INCREASE,
-	PLAYER_ATTACK_SIZE_INCREASE
+	PLAYER_JUMP_HEIGHT_INCREASE
 }
 
 
@@ -25,7 +23,9 @@ var last_destabilize_time: int = -DESTABILIZE_DURATION
 var destabilizations: Array[DestabilizationType] = []
 var old_values: Array = []
 var destabilized: bool = false
-var penis = "chode"
+
+func _ready():
+	last_destabilize_time = Time.get_ticks_msec() - DESTABILIZE_DURATION
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -38,7 +38,7 @@ func _process(delta: float) -> void:
 		on_stabilize()
 	
 	if not destabilized and now > last_destabilize_time + DESTABILIZE_COOLDOWN:
-		on_destabilize(1)
+		on_destabilize(2)
 		last_destabilize_time = now
 
 func on_destabilize(count: int) -> void:
@@ -47,7 +47,6 @@ func on_destabilize(count: int) -> void:
 	for i in range(count):
 		var new_destabilization = DestabilizationType.values().pick_random()
 		if new_destabilization not in destabilizations:
-			destabilizations.append(new_destabilization)
 			var old_value = null
 			match new_destabilization:
 				DestabilizationType.PLAYER_REVERSE_GRAVITY:
@@ -59,17 +58,13 @@ func on_destabilize(count: int) -> void:
 					old_value = [player.h_accel, player.h_deaccel]
 					player.h_accel *= 0.3
 					player.h_deaccel = 0.0
-				DestabilizationType.PLAYER_BOUNCY:
-					pass
 				DestabilizationType.PLAYER_SPEED_INCREASE:
 					old_value = player.h_max_speed
 					player.h_max_speed *= 5
 				DestabilizationType.PLAYER_JUMP_HEIGHT_INCREASE:
 					old_value = [player.jump_velocity, player.jump_accel]
-					player.jump_velocity *= 5
-					player.jump_accel *= 5
-				DestabilizationType.PLAYER_ATTACK_SIZE_INCREASE:
-					pass
+					player.jump_velocity *= 15
+					player.jump_accel *= 15
 			destabilizations.append(new_destabilization)
 			old_values.append(old_value)
 
@@ -86,15 +81,11 @@ func on_stabilize() -> void:
 			DestabilizationType.PLAYER_NO_FRICTION:
 				player.h_accel = old_value[0]
 				player.h_deaccel = old_value[1]
-			DestabilizationType.PLAYER_BOUNCY:
-				pass
 			DestabilizationType.PLAYER_SPEED_INCREASE:
 				player.h_max_speed = old_value
 			DestabilizationType.PLAYER_JUMP_HEIGHT_INCREASE:
 				player.jump_velocity = old_value[0]
 				player.jump_accel = old_value[1]
-			DestabilizationType.PLAYER_ATTACK_SIZE_INCREASE:
-				pass
 
 	destabilizations = []
 	old_values = []
