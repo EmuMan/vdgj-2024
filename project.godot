@@ -22,7 +22,8 @@ Util="*res://scripts/global/util.gd"
 [global_group]
 
 Terrain=""
-Shootable=""
+Player=""
+Enemy=""
 
 [input]
 
@@ -67,3 +68,4 @@ dash={
 2d_physics/layer_3="Player Bullets"
 2d_physics/layer_4="Player Melee"
 2d_physics/layer_9="Enemy"
+2d_physics/layer_10="Enemy Bullets"

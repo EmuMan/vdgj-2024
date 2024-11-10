@@ -1,11 +1,12 @@
 extends Node2D
 
+@export var target: Node2D
 
-const shooting_cooldown: int = 300
+const shooting_cooldown: int = 2000
 
 var last_shoot_action_time: int = 0
 
-const bullet_scene := preload("res://scenes/player/player_bullet.tscn")
+const bullet_scene := preload("res://scenes/enemy/enemy_bullet.tscn")
 
 
 func _physics_process(delta: float) -> void:
@@ -13,10 +14,9 @@ func _physics_process(delta: float) -> void:
 	
 	if now < last_shoot_action_time + shooting_cooldown:
 		return
-	
-	if Input.is_action_just_pressed("shoot"):
-		var mouse_pos := get_global_mouse_position()
-		var displacement := mouse_pos - global_position
+
+	if is_instance_valid(target):
+		var displacement := target.global_position - global_position
 		shoot(displacement.angle())
 
 func shoot(direction: float) -> void:

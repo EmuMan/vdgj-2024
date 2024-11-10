@@ -7,21 +7,21 @@ enum JumpState { CAN_JUMP, JUMPING, AIRBORN }
 enum DashState { CAN_DASH, DASHING, ON_COOLDOWN }
 
 
-const H_MAX_SPEED = 300.0
-const H_ACCEL = 3000.0
-const H_DEACCEL = 3000.0
+@export var h_max_speed = 300.0
+@export var h_accel = 3000.0
+@export var h_deaccel = 3000.0
 
-const V_MAX_SPEED = 800.0
+@export var v_max_speed = 800.0
 
-const JUMP_VELOCITY = -300.0
-const JUMP_ACCEL = -1000.0
-const JUMP_ACCEL_TIME = 300
-const JUMP_COYOTE_TIME = 100
-const JUMP_BUFFER_TIME = 100
+@export var jump_velocity = -300.0
+@export var jump_accel = -1000.0
+@export var jump_accel_time = 300
+@export var jump_coyote_time = 100
+@export var jump_buffer_time = 100
 
-const DASH_VELOCITY = 1000.0
-const DASH_DURATION = 100
-const DASH_COOLDOWN = 1000
+@export var dash_velocity = 1000.0
+@export var dash_duration = 100
+@export var dash_cooldown = 1000
 
 
 var grounded_state: GroundedState = GroundedState.AIRBORN
@@ -52,11 +52,11 @@ func _physics_process(delta: float) -> void:
 func process_inputs(delta: float) -> void:
 	var now = Time.get_ticks_msec()
 	
-	if now <= last_dash_action_time + DASH_DURATION:
+	if now <= last_dash_action_time + dash_duration:
 		dash_state = DashState.DASHING
-	elif now < last_dash_action_time + DASH_COOLDOWN:
+	elif now < last_dash_action_time + dash_cooldown:
 		if dash_state == DashState.DASHING:
-			velocity.y = max(velocity.y, -DASH_VELOCITY / 10.)
+			velocity.y = max(velocity.y, -dash_velocity / 10.)
 		dash_state = DashState.ON_COOLDOWN
 	else:
 		dash_state = DashState.CAN_DASH
@@ -70,7 +70,7 @@ func process_inputs(delta: float) -> void:
 		current_dash_direction = displacement.angle()
 	
 	if dash_state == DashState.DASHING:
-		velocity = Vector2(DASH_VELOCITY, 0).rotated(current_dash_direction)
+		velocity = Vector2(dash_velocity, 0).rotated(current_dash_direction)
 		return
 
 	var jump_pressed = Input.is_action_pressed("jump")
@@ -85,27 +85,27 @@ func process_inputs(delta: float) -> void:
 	elif jump_state == JumpState.CAN_JUMP:
 		jump_state = JumpState.AIRBORN
 
-	if jump_state == JumpState.CAN_JUMP && now <= last_jump_input_time + JUMP_BUFFER_TIME:
-		velocity.y = JUMP_VELOCITY
+	if jump_state == JumpState.CAN_JUMP && now <= last_jump_input_time + jump_buffer_time:
+		velocity.y = jump_velocity
 		jump_state = JumpState.JUMPING
 		last_jump_action_time = now
 
 	if jump_state == JumpState.JUMPING:
-		if jump_pressed && now <= last_jump_action_time + JUMP_ACCEL_TIME:
-			velocity.y += JUMP_ACCEL * delta
+		if jump_pressed && now <= last_jump_action_time + jump_accel_time:
+			velocity.y += jump_accel * delta
 		else:
 			jump_state = JumpState.AIRBORN
 
 	var direction := Input.get_axis("move_left", "move_right")
 	if direction:
-		var delta_v = H_ACCEL * direction * delta
+		var delta_v = h_accel * direction * delta
 		if sign(velocity.x) != sign(delta_v):
-			delta_v += H_DEACCEL * direction * delta
-		velocity.x = clamp(velocity.x + delta_v, -H_MAX_SPEED, H_MAX_SPEED)
+			delta_v += h_deaccel * direction * delta
+		velocity.x = clamp(velocity.x + delta_v, -h_max_speed, h_max_speed)
 	else:
-		velocity.x = move_toward(velocity.x, 0, H_DEACCEL * delta)
+		velocity.x = move_toward(velocity.x, 0, h_deaccel * delta)
 	
-	velocity.y = clamp(velocity.y, -V_MAX_SPEED, V_MAX_SPEED)
+	velocity.y = clamp(velocity.y, -v_max_speed, v_max_speed)
 
 func update_grounded_state() -> void:
 	var now = Time.get_ticks_msec()
@@ -114,9 +114,9 @@ func update_grounded_state() -> void:
 		grounded_state = GroundedState.GROUNDED
 		return
 	# if we are within the coyote time
-	if now <= last_time_grounded + JUMP_COYOTE_TIME:
+	if now <= last_time_grounded + jump_coyote_time:
 		# if jump has already been processed within the coyote time
-		if now <= last_jump_action_time + JUMP_COYOTE_TIME:
+		if now <= last_jump_action_time + jump_coyote_time:
 			grounded_state = GroundedState.AIRBORN
 		else:
 			grounded_state = GroundedState.GROUNDED

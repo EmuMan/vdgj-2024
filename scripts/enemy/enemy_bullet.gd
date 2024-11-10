@@ -1,7 +1,7 @@
 extends RigidBody2D
 
 
-const PLAYER_BULLET_SPEED = 500
+const ENEMY_BULLET_SPEED = 500
 
 var facing_direction: float = 0.
 
@@ -10,7 +10,7 @@ func _ready() -> void:
 	facing_direction = transform.get_rotation()
 
 func _physics_process(delta: float) -> void:
-	var movement_vector := Vector2(PLAYER_BULLET_SPEED, 0) * delta
+	var movement_vector := Vector2(ENEMY_BULLET_SPEED, 0) * delta
 	movement_vector = movement_vector.rotated(facing_direction)
 	var collision := move_and_collide(movement_vector)
 	if collision:
@@ -18,14 +18,14 @@ func _physics_process(delta: float) -> void:
 		if collider is Node:
 			if "Terrain" in collider.get_groups():
 				on_terrain_collision()
-			elif "Enemy" in collider.get_groups():
-				on_enemy_collision(collider)
+			elif "Player" in collider.get_groups():
+				on_player_collision(collider)
 
 func on_terrain_collision() -> void:
 	queue_free()
 
-func on_enemy_collision(enemy: Node) -> void:
-	var stats := enemy.get_parent().find_child("EnemyStats")
+func on_player_collision(player: Node) -> void:
+	var stats := player.get_parent().find_child("PlayerStats")
 	if is_instance_valid(stats):
-		stats.damage(40.0)
+		stats.damage(10.0)
 		queue_free()
