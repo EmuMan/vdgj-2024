@@ -69,3 +69,7 @@ dash={
 2d_physics/layer_4="Player Melee"
 2d_physics/layer_9="Enemy"
 2d_physics/layer_10="Enemy Bullets"
+
+[rendering]
+
+textures/canvas_textures/default_texture_filter=0

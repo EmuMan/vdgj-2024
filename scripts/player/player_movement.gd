@@ -12,6 +12,7 @@ enum DashState { CAN_DASH, DASHING, ON_COOLDOWN }
 @export var h_deaccel = 3000.0
 
 @export var v_max_speed = 800.0
+@export var gravity_modifier = 1.0
 
 @export var jump_velocity = -300.0
 @export var jump_accel = -1000.0
@@ -40,7 +41,7 @@ var current_dash_direction: float = 0.0
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
 	if not is_on_floor():
-		velocity += get_gravity() * delta
+		velocity += get_gravity() * delta * gravity_modifier
 
 	update_grounded_state()
 	update_movement_state()

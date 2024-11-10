@@ -1,0 +1,26 @@
+[gd_scene load_steps=6 format=3 uid="uid://cgfb0ii5ggrxo"]
+
+[ext_resource type="Script" path="res://scripts/enemy/enemy_shooter.gd" id="1_3jt1o"]
+[ext_resource type="Script" path="res://scripts/enemy/stationary_enemy.gd" id="1_7by1q"]
+[ext_resource type="Texture2D" uid="uid://b7525geo0udm3" path="res://assets/sprites/larry.png" id="1_jsvsl"]
+[ext_resource type="Script" path="res://scripts/enemy/enemy_stats.gd" id="2_jjs81"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_4gduy"]
+radius = 8.0
+
+[node name="StationaryEnemy" type="RigidBody2D" groups=["Enemy"]]
+collision_layer = 256
+collision_mask = 15
+script = ExtResource("1_7by1q")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_4gduy")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_jsvsl")
+
+[node name="EnemyShooter" type="Node2D" parent="."]
+script = ExtResource("1_3jt1o")
+
+[node name="EnemyStats" type="Node2D" parent="."]
+script = ExtResource("2_jjs81")

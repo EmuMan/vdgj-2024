@@ -1,26 +1,17 @@
-[gd_scene load_steps=13 format=3 uid="uid://cs3hle6vg6r4r"]
+[gd_scene load_steps=10 format=3 uid="uid://cs3hle6vg6r4r"]
 
 [ext_resource type="Script" path="res://scripts/player/player_movement.gd" id="1_qsdeo"]
+[ext_resource type="Texture2D" uid="uid://dw0rjvk6eljd8" path="res://assets/sprites/cat.png" id="2_w3ocd"]
 [ext_resource type="Script" path="res://scripts/player/player_shooter.gd" id="2_wxvxt"]
 [ext_resource type="Script" path="res://scripts/player/player_stats.gd" id="3_c4dmc"]
-[ext_resource type="Script" path="res://scripts/enemy/enemy_shooter.gd" id="4_16q0q"]
-[ext_resource type="Script" path="res://levels/player_camera.gd" id="4_jbj4d"]
-[ext_resource type="Script" path="res://scripts/enemy/enemy_stats.gd" id="6_vqpek"]
+[ext_resource type="Script" path="res://scripts/player/player_camera.gd" id="4_jbj4d"]
+[ext_resource type="PackedScene" uid="uid://cgfb0ii5ggrxo" path="res://scenes/enemy/stationary_enemy.tscn" id="5_upc8m"]
 [ext_resource type="Script" path="res://scripts/gameplay/destabilizer.gd" id="7_86qyq"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_84s5h"]
 size = Vector2(16, 16)
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_ob6vw"]
-size = Vector2(16, 16)
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fxrcm"]
-size = Vector2(16, 16)
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_4gduy"]
-radius = 8.0
-
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_0muis"]
 size = Vector2(16, 16)
 
 [node name="TestScene" type="Node2D"]
@@ -35,7 +26,7 @@ script = ExtResource("1_qsdeo")
 shape = SubResource("RectangleShape2D_84s5h")
 
 [node name="Sprite2D" type="Sprite2D" parent="Player"]
-texture = SubResource("PlaceholderTexture2D_ob6vw")
+texture = ExtResource("2_w3ocd")
 
 [node name="PlayerShooter" type="Node2D" parent="Player"]
 script = ExtResource("2_wxvxt")
@@ -53,6 +44,18 @@ position = Vector2(8, 8)
 shape = SubResource("RectangleShape2D_fxrcm")
 
 [node name="Polygon2D" type="Polygon2D" parent="Collider1"]
+polygon = PackedVector2Array(0, 0, 16, 0, 16, 16, 0, 16)
+
+[node name="Collider4" type="StaticBody2D" parent="." groups=["Terrain"]]
+position = Vector2(64, -304)
+scale = Vector2(39, 16)
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Collider4"]
+position = Vector2(8, 8)
+shape = SubResource("RectangleShape2D_fxrcm")
+
+[node name="Polygon2D" type="Polygon2D" parent="Collider4"]
 polygon = PackedVector2Array(0, 0, 16, 0, 16, 16, 0, 16)
 
 [node name="Collider2" type="StaticBody2D" parent="." groups=["Terrain"]]
@@ -79,27 +82,31 @@ shape = SubResource("RectangleShape2D_fxrcm")
 [node name="Polygon2D" type="Polygon2D" parent="Collider3"]
 polygon = PackedVector2Array(0, 0, 16, 0, 16, 16, 0, 16)
 
+[node name="Collider5" type="StaticBody2D" parent="." groups=["Terrain"]]
+position = Vector2(328, -224)
+scale = Vector2(6.34, 14.404)
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Collider5"]
+position = Vector2(8, 8)
+shape = SubResource("RectangleShape2D_fxrcm")
+
+[node name="Polygon2D" type="Polygon2D" parent="Collider5"]
+polygon = PackedVector2Array(0, 0, 16, 0, 16, 16, 0, 16)
+
 [node name="PlayerCamera" type="Camera2D" parent="." node_paths=PackedStringArray("player")]
+zoom = Vector2(2, 2)
 script = ExtResource("4_jbj4d")
 player = NodePath("../Player")
 
-[node name="StationaryEnemy" type="RigidBody2D" parent="." groups=["Enemy"]]
-position = Vector2(264, 40)
-collision_layer = 256
-collision_mask = 15
+[node name="StationaryEnemy" parent="." node_paths=PackedStringArray("target") instance=ExtResource("5_upc8m")]
+position = Vector2(264, 72)
+target = NodePath("../Player")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StationaryEnemy"]
-shape = SubResource("CircleShape2D_4gduy")
+[node name="StationaryEnemy2" parent="." node_paths=PackedStringArray("target") instance=ExtResource("5_upc8m")]
+position = Vector2(512, 128)
+target = NodePath("../Player")
 
-[node name="Sprite2D" type="Sprite2D" parent="StationaryEnemy"]
-texture = SubResource("PlaceholderTexture2D_0muis")
-
-[node name="EnemyShooter" type="Node2D" parent="StationaryEnemy" node_paths=PackedStringArray("target")]
-script = ExtResource("4_16q0q")
-target = NodePath("../../Player")
-
-[node name="EnemyStats" type="Node2D" parent="StationaryEnemy"]
-script = ExtResource("6_vqpek")
-
-[node name="Destabilizer" type="Node2D" parent="."]
+[node name="Destabilizer" type="Node2D" parent="." node_paths=PackedStringArray("player")]
 script = ExtResource("7_86qyq")
+player = NodePath("../Player")
