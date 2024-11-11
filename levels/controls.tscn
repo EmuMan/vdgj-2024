@@ -1,0 +1,45 @@
+[gd_scene load_steps=2 format=3 uid="uid://df7oakyfpwj7"]
+
+[ext_resource type="Script" path="res://ui/controls.gd" id="1_6jbh6"]
+
+[node name="Controls" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_6jbh6")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 288.0
+offset_top = 64.0
+offset_right = 864.0
+offset_bottom = 477.0
+text = "\"i wasnt scareds of anything. that was until i met the scary man.
+     the scary man wasnt scareds of anything.
+            that was until he met...
+                   larry.\"
+
+
+inside larry's deadly dungeon, the rules of pyhsics hold no power over you.
+that is, if he activates his physics destabilizer machine.
+you must get rid of as many mini larrys as possible while you still can.
+you cannot win, but every larry you kill is a larry killed.
+
+W / Up Arrow - Jump
+AD / Left/Right - Move Horizontally
+Shift - Dash
+Left Click - Swing Stick
+Right Click - Shoot Hairball"
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 0
+offset_left = 552.0
+offset_top = 544.0
+offset_right = 597.0
+offset_bottom = 575.0
+text = "Back"
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
