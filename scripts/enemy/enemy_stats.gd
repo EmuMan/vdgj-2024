@@ -4,6 +4,8 @@ extends Node2D
 
 @onready var health_bar = $"../HealthBar"
 
+@onready var death_sound_scene = preload("res://scenes/enemy/enemy_death_sound.tscn")
+
 var health := 0.0
 
 
@@ -15,6 +17,9 @@ func _ready() -> void:
 func on_death() -> void:
 	print_debug("lary kiled B)")
 	Util.enemies_killed += 1
+	var death_sound = death_sound_scene.instantiate() as Node2D
+	death_sound.global_position = global_position
+	get_tree().root.add_child(death_sound)
 	get_parent().queue_free()
 
 func damage(hp: float) -> void:

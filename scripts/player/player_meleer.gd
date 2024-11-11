@@ -1,5 +1,6 @@
 extends Node2D
 
+@onready var melee_audio_player = $MeleeAudio
 
 const melee_cooldown: int = 200
 
@@ -24,3 +25,4 @@ func melee(direction: float) -> void:
 	var melee_instance := melee_scene.instantiate()
 	melee_instance.rotation = direction
 	add_child(melee_instance)
+	melee_audio_player.play()

@@ -1,6 +1,8 @@
 extends Node2D
 
 
+@onready var shoot_audio_player = $ShootAudio
+
 const shooting_cooldown: int = 300
 
 var last_shoot_action_time: int = 0
@@ -25,3 +27,4 @@ func shoot(direction: float) -> void:
 	bullet_instance.global_position = global_position
 	bullet_instance.rotation = direction
 	get_tree().root.add_child(bullet_instance)
+	shoot_audio_player.play()

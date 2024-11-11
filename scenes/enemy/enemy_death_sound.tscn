@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://bmn1xu6r8tno5"]
+
+[ext_resource type="AudioStream" uid="uid://d2rrjh768078s" path="res://assets/sfx/scream.mp3" id="1_u04o5"]
+[ext_resource type="Script" path="res://scripts/sound_oneshot.gd" id="2_my6r6"]
+
+[node name="EnemyDeathSound" type="AudioStreamPlayer2D"]
+stream = ExtResource("1_u04o5")
+volume_db = 10.306
+autoplay = true
+script = ExtResource("2_my6r6")
+
+[connection signal="finished" from="." to="." method="_on_finished"]

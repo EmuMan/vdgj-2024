@@ -4,6 +4,9 @@ class_name PlayerStats
 
 signal health_changed
 
+@onready var hurt_audio_player = $HurtAudio
+@onready var heal_audio_player = $HealAudio
+
 @export var max_health: float = 100.0
 
 var health := 0.0
@@ -25,7 +28,9 @@ func damage(hp: float) -> void:
 	else:
 		health -= hp
 	health_changed.emit()
+	hurt_audio_player.play()
 
 func heal(hp: float) -> void:
 	health = min(health + hp, max_health)
 	health_changed.emit()
+	heal_audio_player.play()
