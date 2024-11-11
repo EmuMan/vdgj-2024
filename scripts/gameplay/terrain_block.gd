@@ -15,6 +15,7 @@ extends Node2D
 
 @onready var terrain_scene := preload("res://scenes/terrain.tscn")
 @onready var stationary_enemy_scene := preload("res://scenes/enemy/stationary_enemy.tscn")
+@onready var health_scene := preload("res://scenes/health_pack.tscn")
 
 
 # Called when the node enters the scene tree for the first time.
@@ -44,6 +45,12 @@ func add_random_floor_pillar(on_ceiling: bool):
 	var y_pos = -block_height / 2 if on_ceiling else block_height / 2 - height
 	var pillar = instantiate_terrain(Vector2(x_pos, y_pos), Vector2(width, height))
 	add_child(pillar)
+	
+	if not on_ceiling:
+		var enemy_pos = Vector2(x_pos, y_pos) + Vector2(width / 2, -2.)
+		var enemy = instantiate_stationary_enemy(enemy_pos)
+		enemy.target = get_node("/root/TestScene/Player")
+		add_child(enemy)
 
 func add_random_platform():
 	var pos = Vector2(randf_range(-block_width / 2, block_width / 2),
@@ -52,9 +59,14 @@ func add_random_platform():
 	add_child(platform)
 	
 	var enemy_pos = pos + Vector2(platform_width / 2, -2.)
-	var enemy = instantiate_stationary_enemy(enemy_pos)
-	enemy.target = get_node("/root/TestScene/Player")
-	add_child(enemy)
+	if randf() > 0.5:
+		var enemy = instantiate_stationary_enemy(enemy_pos)
+		enemy.target = get_node("/root/TestScene/Player")
+		add_child(enemy)
+	else:
+		var health = health_scene.instantiate()
+		health.position = enemy_pos * 8
+		add_child(health)
 
 func instantiate_terrain(position: Vector2, size: Vector2) -> Node2D:
 	var terrain = terrain_scene.instantiate() as Node2D

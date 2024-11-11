@@ -1,14 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://clfxxr5ypno7y"]
+[gd_scene load_steps=4 format=3 uid="uid://clfxxr5ypno7y"]
 
 [ext_resource type="Script" path="res://scripts/player/player_melee.gd" id="1_qcunc"]
+[ext_resource type="Texture2D" uid="uid://bnor28w1rasj7" path="res://assets/sprites/stick.png" id="2_ynyft"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_hxbpj"]
 height = 36.0
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_60qns"]
-
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_k2fp3"]
-size = Vector2(32, 16)
 
 [node name="PlayerMelee" type="Area2D"]
 collision_layer = 8
@@ -16,15 +12,13 @@ collision_mask = 256
 script = ExtResource("1_qcunc")
 
 [node name="Hurtbox" type="CollisionShape2D" parent="."]
-position = Vector2(8, 0)
+position = Vector2(16, 0)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_hxbpj")
 
-[node name="Swing" type="AnimatedSprite2D" parent="."]
-sprite_frames = SubResource("SpriteFrames_60qns")
-
-[node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(8, 0)
-texture = SubResource("PlaceholderTexture2D_k2fp3")
+[node name="Stick" type="Sprite2D" parent="."]
+position = Vector2(0, -8)
+texture = ExtResource("2_ynyft")
+centered = false
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

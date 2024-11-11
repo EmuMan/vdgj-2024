@@ -24,3 +24,8 @@ script = ExtResource("1_3jt1o")
 
 [node name="EnemyStats" type="Node2D" parent="."]
 script = ExtResource("2_jjs81")
+
+[node name="HealthBar" type="Polygon2D" parent="."]
+position = Vector2(-8, -13.19)
+color = Color(0.423529, 0.858824, 0, 1)
+polygon = PackedVector2Array(0, 0, 16, 0, 16, 2, 0, 2)
